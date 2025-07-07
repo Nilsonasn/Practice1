@@ -10,18 +10,40 @@
 
 <body>
     <div x-data=pageState>
-        <button x-on:click="increment()">+</button>
-        <button x-on:click="decrement()">-</button>
-        <input type="number" x-model.number="amount"></input>
-        <span x-text="amount"></span>
-        <span x-text="count"></span>
+        <button x-on:click="getPokeData()">SEARCH!</button>
+        <input type="text" x-model="pokeName"></input>
+        <template x-if="pokeData!=null">
+            <div>
+            <img :src="pokeData.sprites.front_default" :width="pokeData.weight" :height="pokeData.height*50">
+            </div>
+        </template>
+
     </div>
     <script>
-        const pageState = {count: 0,
-            amount: 0,
-            increment () {this.count+=this.amount;},
-            decrement () {this.count-=this.amount;}};
-        
+        const pageState = {
+            pokeName: "",
+            pokeData: null,
+            async getPokeData() { this.pokeData = await getData(this.pokeName) }
+
+        };
+
+
+        async function getData(pokeName) {
+            if (pokeName != "") {
+                const url = "https://pokeapi.co/api/v2/pokemon/"
+                const response = await fetch(url+pokeName);
+
+                if (response.ok) {
+                    const json = await response.json();
+                    console.log(json);
+                    return json;
+                }
+                else {
+                    console.error(response.status);
+                }
+            }
+        }
+
     </script>
 </body>
 
