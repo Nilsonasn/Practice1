@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Practice1</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
+
 <body>
-    body
+    <div x-data=pageState>
+        <button x-on:click="increment()">+</button>
+        <button x-on:click="decrement()">-</button>
+        <input type="number" x-model.number="amount"></input>
+        <span x-text="amount"></span>
+        <span x-text="count"></span>
+    </div>
+    <script>
+        const pageState = {count: 0,
+            amount: 0,
+            increment () {this.count+=this.amount;},
+            decrement () {this.count-=this.amount;}};
+        
+    </script>
 </body>
+
 </html>
